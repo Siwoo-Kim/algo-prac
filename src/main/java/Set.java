@@ -12,4 +12,9 @@ public class Set<E> {
     public boolean contains(E v) {
         return table.contains(v);
     }
+
+    @Override
+    public String toString() {
+        return table.keys().toString();
+    }
 }

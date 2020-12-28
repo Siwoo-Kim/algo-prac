@@ -1,3 +1,5 @@
+import java.lang.reflect.Array;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
@@ -147,6 +149,18 @@ public class LinkedList<E> implements Iterable<E> {
         }
     }
 
+
+    public E[] toArray(E[] array) {
+        @SuppressWarnings("unchecked")
+        E[] elements = (E[]) Array.newInstance(
+                array.getClass().getComponentType(), size());
+        int i = 0;
+        for (E e: this) {
+            elements[i++] = e;
+        }
+        return elements;
+    }
+    
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();

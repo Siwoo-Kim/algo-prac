@@ -1,4 +1,5 @@
 import javax.transaction.TransactionRequiredException;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
@@ -11,7 +12,15 @@ public class PriorityQueue<E extends Comparable<E>> implements Queue<E> {
     @SuppressWarnings("unchecked")
     private E[] elements = (E[]) new Comparable[DEFAULT_CAPACITY];
     private int N;
-    
+    private final Comparator<E> comparator;
+
+    public PriorityQueue() {
+        this(null);
+    }
+    public PriorityQueue(Comparator<E> comparator) {
+        this.comparator = comparator;
+    }
+
     @Override
     public void enqueue(E e) {
         checkNotNull(e);
@@ -40,7 +49,11 @@ public class PriorityQueue<E extends Comparable<E>> implements Queue<E> {
 
     private boolean less(E e1, E e2) {
         assert e1 != null && e2 != null;
-        return e1.compareTo(e2) < 0;
+        if (comparator == null) {
+            return e1.compareTo(e2) < 0;
+        } else {
+            return comparator.compare(e1, e2) < 0;
+        }
     }
 
     private void resize(int capacity) {
